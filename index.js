@@ -23,13 +23,13 @@ async function run() {
         const productsCollection = db.collection('products');
 
         // Get All Products
-        app.get("/products", async (req, res) => {
+        app.get("/women-wear", async (req, res) => {
             const result = await productsCollection.find().toArray()
             res.send(result)
         })
 
         //Get Single Details Products
-        app.get("/products/:id", async (req, res) => {
+        app.get("/women-wear/:id", async (req, res) => {
             const id = (req.params.id)
             const query = { _id: new ObjectId(id) }
             const result = await productsCollection.findOne(query)
