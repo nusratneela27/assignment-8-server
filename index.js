@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const bcrypt = require('bcrypt');
 const { MongoClient, ObjectId } = require("mongodb");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 
@@ -69,9 +70,18 @@ async function run() {
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid email or password' });
             }
+
+            // Generate JWT token
+            const token = jwt.sign(
+                { email: user.email, role: user.role },
+                process.env.JWT_SECRET,
+                { expiresIn: process.env.EXPIRES_IN }
+            );
+
             res.json({
                 success: true,
                 message: 'Login successful',
+                accessToken: token,
             });
         })
 
