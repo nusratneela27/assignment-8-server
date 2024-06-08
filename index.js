@@ -41,7 +41,12 @@ async function run() {
             const hashedPassword = await bcrypt.hash(password, 10);
 
             // Insert user into the database
-            await userCollection.insertOne({ name, email, password: hashedPassword });
+            await userCollection.insertOne({
+                name,
+                email,
+                password: hashedPassword,
+                role: "user"
+            });
 
             res.status(201).json({
                 success: true,
@@ -67,7 +72,6 @@ async function run() {
             res.json({
                 success: true,
                 message: 'Login successful',
-                token
             });
         })
 
